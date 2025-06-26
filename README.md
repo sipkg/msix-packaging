@@ -1,6 +1,16 @@
 # MSIX SDK 
    Copyright (c) 2019 Microsoft Corp.  All rights reserved.
 
+## sipkg version
+
+This is a linux working version where :
+
+- activate parser and packer, deactivate samples and tests
+- cmake version requirement changed from 3.29 to 3.25 so it compiles on LTS distros
+    ```sh
+    sed -i 's/cmake_minimum_required(VERSION 3.29.0/cmake_minimum_required(VERSION 3.25.0/' $(find -name CMakeLists.txt)
+    ```
+
 ## Description
    The MSIX SDK project is an effort to enable developers on a variety of platforms to pack and unpack
    packages for the purposes of distribution from either the Microsoft Store, or their own content distribution networks.

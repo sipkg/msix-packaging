@@ -2,10 +2,10 @@
 # script to build on linux
 build=MinSizeRel
 bundle=off
-validationParser=off
-pack=off
-samples=on
-tests=on
+validationParser=on
+pack=on
+samples=off
+tests=off
 
 usage()
 {
