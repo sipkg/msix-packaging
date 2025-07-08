@@ -6,6 +6,7 @@ validationParser=on
 pack=on
 samples=off
 tests=off
+staticMsix=on
 
 usage()
 {
@@ -16,6 +17,7 @@ usage()
     echo $'\t' "--pack                  Include packaging features. Sets validation parser on."
     echo $'\t' "--skip-samples          Skip building samples."
     echo $'\t' "--skip-tests            Skip building tests."
+    echo $'\t' "--static-msix           Build libmsix as static library instead of shared."
 }
 
 printsetup()
@@ -26,6 +28,7 @@ printsetup()
     echo "Pack support:" $pack 
     echo "Build samples:" $samples
     echo "Build tests:" $tests
+    echo "Static MSIX library:" $staticMsix
 }
 
 while [ "$1" != "" ]; do
@@ -49,6 +52,8 @@ while [ "$1" != "" ]; do
                 ;;
         --skip-tests ) tests=off
                 ;;
+        --static-msix ) staticMsix=on
+                ;;
         * )     usage
                 exit 1
     esac
@@ -63,7 +68,7 @@ cd .vs
 find . -depth -name *msix* | xargs -0 -r rm -rf
 
 echo "cmake -DCMAKE_BUILD_TYPE="$build "-DSKIP_BUNDLES="$bundle "-DUSE_VALIDATION_PARSER="$validationParser 
-echo "-DCMAKE_TOOLCHAIN_FILE=../cmake/linux.cmake" "-DMSIX_PACK="$pack "-DMSIX_SAMPLES="$samples "-DMSIX_TESTS="$tests "-DLINUX=on .."
+echo "-DCMAKE_TOOLCHAIN_FILE=../cmake/linux.cmake" "-DMSIX_PACK="$pack "-DMSIX_SAMPLES="$samples "-DMSIX_TESTS="$tests "-DUSE_STATIC_MSIX="$staticMsix "-DLINUX=on .."
 cmake -DCMAKE_BUILD_TYPE=$build \
       -DSKIP_BUNDLES=$bundle \
       -DUSE_VALIDATION_PARSER=$validationParser \
@@ -71,5 +76,6 @@ cmake -DCMAKE_BUILD_TYPE=$build \
       -DMSIX_PACK=$pack \
       -DMSIX_SAMPLES=$samples \
       -DMSIX_TESTS=$tests \
+      -DUSE_STATIC_MSIX=$staticMsix \
       -DLINUX=on ..
 make

@@ -231,10 +231,19 @@ foreach(FILE ${MsixSrc})
 endforeach()
 
 # Define the library
-add_library(${PROJECT_NAME} SHARED 
-    msix.cpp
-    ${MsixSrc}
- )
+if(USE_STATIC_MSIX)
+    # Build as static library
+    add_library(${PROJECT_NAME} STATIC 
+        msix.cpp
+        ${MsixSrc}
+    )
+else()
+    # Build as shared library (default)
+    add_library(${PROJECT_NAME} SHARED 
+        msix.cpp
+        ${MsixSrc}
+    )
+endif()
 
 # Adding dependency to the third party libs directory
 add_dependencies(${PROJECT_NAME} LIBS)
